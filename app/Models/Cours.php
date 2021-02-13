@@ -21,7 +21,6 @@ class Cours extends Model
         'lien_visio',
         'mot_de_passe_visio',
         'lieu',
-        'numero_cours'
     ];
 
     /**

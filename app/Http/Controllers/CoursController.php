@@ -8,8 +8,11 @@ use App\Models\Cours;
 class CoursController extends Controller
 {
     function get_cours(Request $request) {
-        $cours = Cours::select('*')->orderBy('date')->get();
+        $cours = array();
         $nom_cours = Cours::select('nom_du_cours')->distinct()->get();
+        foreach($nom_cours as $n) {
+            $cours[$n->nom_du_cours] = Cours::where('nom_du_cours', '=', $n->nom_du_cours)->orderBy('date')->get();
+        }
         return view('member_section.section_cours.infos_cours', compact('cours', 'nom_cours'));
     }
 
@@ -18,15 +21,14 @@ class CoursController extends Controller
             'nom_du_cours' => 'required',
             'date' => 'required|date',
             'heure' => 'required',
-            'lien_visio' => 'url',
-            'numero_cours' => 'required|integer'
+            'lien_visio' => 'nullable|url',
         ]);
 
         $cours = new Cours;
         $cours->nom_du_cours = $request->nom_du_cours;
         $cours->date = $request->date;
         $cours->heure = $request->heure;
-        if(!$request->presentiel) {
+        if(!$request->has('presentiel')) {
             $cours->presentiel = False;
             $cours->lien_visio = $request->lien_visio;
             $cours->mot_de_passe_visio = $request->mot_de_passe_visio;
@@ -37,7 +39,6 @@ class CoursController extends Controller
             $cours->mot_de_passe_visio = "";
             $cours->lieu = $request->lieu;
         }
-        $cours->numero_cours = $request->numero_cours;
         $query = $cours->save();
 
         if($query) {

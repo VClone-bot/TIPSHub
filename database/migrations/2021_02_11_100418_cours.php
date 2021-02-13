@@ -22,7 +22,6 @@ class Cours extends Migration
             $table->string('lien_visio');
             $table->string('mot_de_passe_visio');
             $table->string('lieu');
-            $table->string('numero_cours');
             $table->timestamps();
         });
     }

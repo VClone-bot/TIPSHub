@@ -31,7 +31,7 @@
                     <input type="text" name="nom_du_cours" list="nom_cours" />
                     <datalist id="nom_cours">
                         @foreach($nom_cours as $n)
-                        <option>{{ $n }}</option>
+                            <option>{{ $n->nom_cours }}</option>
                         @endforeach
                     </datalist>
                     <span class="text-danger">@error('nom_du_cours') {{ $message }} @enderror </span>
@@ -65,11 +65,6 @@
                     <label for="mot_de_passe_visio">Mot de passe du lien de visio (laisser blanc si présentiel)</label>
                     <input type="text" class="form-control" name="mot_de_passe_visio" placeholder="Mot de passe pour entrer dans la salle de visio" value="{{ old('mot_de_passe_visio') }}">
                     <span class="text-danger">@error('mot_de_passe_visio'){{ $message }} @enderror</span>
-                </div>
-                <div class="form-group">
-                    <label for="numero_cours">Numéro du cours</label>
-                    <input type="text" class="form-control" name="numero_cours" placeholder="Le combientième cours est-ce ?" value="{{ old('numero_cours') }}">
-                    <span class="text-danger">@error('numero_cours'){{ $message }} @enderror</span>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-block btn-primary">Ajouter le cours</button>
