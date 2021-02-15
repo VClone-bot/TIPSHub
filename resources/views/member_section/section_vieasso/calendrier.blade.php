@@ -21,7 +21,7 @@
             <div class="col">
                 <img src="{{ $e->visual_url }}" style="height:600px;">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 {{ $e->name }} <br><br>
                 Date: {{ date("d/m/Y", strtotime($e->date)) }} {{ date("H:i", strtotime($e->heure)) }} <br><br>
                 Lieu: {{ $e->lieu }} <br><br>

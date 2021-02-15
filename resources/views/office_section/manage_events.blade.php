@@ -36,7 +36,7 @@
                         <form action="{{ route('event.del') }}" method="post">
                         @csrf
                             <input type='text' name="id_event" value="{{ $e->id }}" hidden>
-                            <button type="button" class="btn btn-primary btn-lg" style="background-color:#1b1b1b;">Supprimer l'événement</button>
+                            <button type="submit" class="btn btn-primary btn-lg" style="background-color:#1b1b1b;">Supprimer l'événement</button>
                         </form>
                     @endif
                     <form action="{{ route('event.modpage') }}" method="post">

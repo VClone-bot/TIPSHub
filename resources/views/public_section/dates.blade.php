@@ -15,6 +15,7 @@
         </div>
     </div>
     <div class="event_listing">
+        @php $i = 0 @endphp
         @foreach ($events as $e)
         <hr class="hr-primary" />
         <div class="row">
