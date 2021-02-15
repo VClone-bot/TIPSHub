@@ -17,7 +17,7 @@ class NewsSubController extends Controller
         $query = $sub->save();
 
         if($query) {
-            return back()->with('success', 'Vous avez bien été ajoutés à la Newsletter');
+            return back()->with('success', 'Vous avez bien été ajouté à la Newsletter');
         } else {
             return back()->with('fail', 'Erreur détectée: veuillez réessayer');
         }

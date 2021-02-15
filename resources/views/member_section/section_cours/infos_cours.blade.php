@@ -8,7 +8,11 @@
 
 @section('content')
 @if(Session::get('IS_OFFICE') || Session::get('IS_ADMIN'))
-  <button class="btn btn-primary btn-lg" style="background-color:#1b1b1b;"><a href="add_cours" style="color:#FFFFFF">Ajouter un cours</a></button>
+<div class="container-fluid">
+  <div class="row">
+    <button class="btn btn-primary btn-lg" style="background-color:#1b1b1b;"><a href="add_cours" style="color:#FFFFFF">Ajouter un cours</a></button>
+  </div>
+</div>
 @endif
 
 <script>
@@ -25,46 +29,60 @@
   };
 </script>
 
-<div class="container d-flex">
-<div class="row">
-@foreach ($nom_cours as $nom)
-<div class="col-md-4 col-md-offset-6">
-  <div class="calendar light">
-    <div class="calendar_header">
-      <h1 class='header_title'>{{ $nom->nom_du_cours }}</h1>
-      <p class="header_copy">Plan du cours</p>
-    </div>
-    <!-- First item -->
-    @if(sizeof($cours[$nom->nom_du_cours]) > 0)
-      @php $fc = $cours[$nom->nom_du_cours]->first() @endphp
-      <div class="calendar_plan">
-        <div class="cl_plan">
-          <div class="cl_title">Prochain cours @if($fc->presentiel) présentiel @else distanciel @endif</div>
-          <div class="cl_copy">{{ date("d-m-Y", strtotime($fc->date)) }} {{ date("H:i", strtotime($fc->heure)) }}<br>
-          @if($fc->presentiel)
-            <div class="cl_copy">Lieu: {{ $fc->lieu }}</div>        
-          @else
-            <a href='{{ $fc->lien_visio }}' style="color:#000000; text-decoration:underline;">Lien visio</a><br>
-            Mot de passe: {{ $fc->mot_de_passe_visio }}
-          @endif
-          </div>
+<div class="container">
+  <div class="row">
+    @foreach ($nom_cours as $nom)
+    <div class="col-md-4">
+      <div class="calendar light">
+        <div class="calendar_header">
+          <h1 class='header_title'>{{ $nom->nom_du_cours }}</h1>
+          <p class="header_copy">Plan du cours</p>
         </div>
-      </div>       
-    @endif
-    <div class="calendar_events">
-      <p class="ce_title">Cours suivants</p>
-      <!-- Following items -->
-      @for ($i = 1; $i < sizeof($cours[$nom->nom_du_cours]); $i++)
-        <div class="event_item">
-          <div class="ei_Title">{{ date("d-m-Y", strtotime($cours[$nom->nom_du_cours][$i]->date)) }} {{ date("H:i", strtotime($cours[$nom->nom_du_cours][$i]->heure)) }}</div>
-          <div class="ei_Copy">Cours en @if($cours[$nom->nom_du_cours][$i]->presentiel) présentiel @else distanciel @endif</div>
+        <!-- First item -->
+        @if(sizeof($cours[$nom->nom_du_cours]) > 0)
+          @php $fc = $cours[$nom->nom_du_cours]->first() @endphp
+          <div class="calendar_plan">
+            <div class="cl_plan">
+              <div class="cl_title">Prochain cours @if($fc->presentiel) présentiel @else distanciel @endif</div>
+              <div class="cl_copy">{{ date("d/m/Y", strtotime($fc->date)) }} {{ date("H:i", strtotime($fc->heure)) }}<br>
+              @if($fc->presentiel)
+                <div class="cl_copy">Lieu: {{ $fc->lieu }}</div>        
+              @else
+                <a href='{{ $fc->lien_visio }}' style="color:#000000; text-decoration:underline;">Lien visio</a><br>
+                Mot de passe: {{ $fc->mot_de_passe_visio }}
+              @endif
+              @if(Session::get('IS_OFFICE') || Session::get('IS_ADMIN'))
+                <form action="{{ route('cours.delete') }}" method="post">
+                @csrf
+                  <input type="text" name="id_cours" value="{{ $fc->id }}"hidden/>
+                  <button type="submit">Retirer</button>
+                </form>
+              @endif
+              </div>
+            </div>
+          </div>       
+        @endif
+        <div class="calendar_events">
+          <p class="ce_title">Cours suivants</p>
+          <!-- Following items -->
+          @for ($i = 1; $i < sizeof($cours[$nom->nom_du_cours]); $i++)
+            <div class="event_item">
+              <div class="ei_Title">{{ date("d-m-Y", strtotime($cours[$nom->nom_du_cours][$i]->date)) }} {{ date("H:i", strtotime($cours[$nom->nom_du_cours][$i]->heure)) }}</div>
+              <div class="ei_Copy">Cours en @if($cours[$nom->nom_du_cours][$i]->presentiel) présentiel @else distanciel @endif</div>
+              @if(Session::get('IS_OFFICE') || Session::get('IS_ADMIN'))
+                <form action="{{ route('cours.delete') }}" method="post">
+                @csrf
+                  <input type="text" name="id_cours" value="{{ $cours[$nom->nom_du_cours][$i]->id }}" hidden/>
+                  <button type="submit">Retirer</button>
+                </form>
+              @endif
+            </div>
+          @endfor
         </div>
-      @endfor
+      </div>
     </div>
+    @endforeach
   </div>
-</div>
-@endforeach
-</div>
 </div>
 @endsection
 
@@ -73,6 +91,30 @@ $off_white:#fafafa;
 $light_grey:#A39D9E;
 *{
   box-sizing:border-box;
+}
+
+
+.plus-minus-input {
+  align-items: center;
+
+  .input-group-field {
+    text-align: center;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 1rem;
+
+    &::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      appearance: none;
+    }
+  }
+
+  .input-group-button {
+    .circle {
+      border-radius: 50%;
+      padding: 0.25em 0.8em;
+    }
+  }
 }
 
 body{

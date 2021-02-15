@@ -28,10 +28,10 @@
             </div>
                 <div class="form-group">
                     <label for="nom_du_cours">Nom du cours</label>
-                    <input type="text" name="nom_du_cours" list="nom_cours" />
+                    <input type="text" class="form-control" name="nom_du_cours" list="nom_cours">
                     <datalist id="nom_cours">
                         @foreach($nom_cours as $n)
-                            <option>{{ $n->nom_cours }}</option>
+                            <option>{{ $n->nom_du_cours }}</option>
                         @endforeach
                     </datalist>
                     <span class="text-danger">@error('nom_du_cours') {{ $message }} @enderror </span>
@@ -47,8 +47,8 @@
                     <span class="text-danger">@error('heure') {{ $message }} @enderror </span>
                 </div>
                 <div class="form-group">
-                    <label for="presentiel">Cours en présentiel</label>
-                    <input type="checkbox" name="presentiel" value="1">
+                    <label for="presentiel">Cocher si cours en présentiel</label>
+                    <input type="checkbox" name="presentiel" value="1" style="transform: scale(1.7); margin-left: 10px;">
                     <span class="text-danger">@error('presentiel'){{ $message }} @enderror</span>
                 </div>
                 <div class="form-group">

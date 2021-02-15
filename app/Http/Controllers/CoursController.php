@@ -11,7 +11,7 @@ class CoursController extends Controller
         $cours = array();
         $nom_cours = Cours::select('nom_du_cours')->distinct()->get();
         foreach($nom_cours as $n) {
-            $cours[$n->nom_du_cours] = Cours::where('nom_du_cours', '=', $n->nom_du_cours)->orderBy('date')->get();
+            $cours[$n->nom_du_cours] = Cours::where('nom_du_cours', '=', $n->nom_du_cours)->where('date', '>=', date('Y-m-d'))->orderBy('date')->get();
         }
         return view('member_section.section_cours.infos_cours', compact('cours', 'nom_cours'));
     }
@@ -50,6 +50,7 @@ class CoursController extends Controller
 
     function delete(Request $request) {
         Cours::where('id', '=', $request->id_cours)->delete();
+        return back()->with('success', 'L\'événement a bien été supprimé');
     }
 
     function add() {

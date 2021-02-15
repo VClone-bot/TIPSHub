@@ -8,7 +8,7 @@
 @section('content')
 <div class="container">
     <div class="row" style="margin-top:45px;">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-8 col-md-offset-8">
             <h4>Ajout d'événement</h4>
             <br>
             <form action="{{ route('event.create') }}" method="post" enctype="multipart/form-data">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" class="form-control" name="description" placeholder="Description de l'événement" value="{{ old('description') }}">
+                    <textarea name="description" class="form-control" placeholder="Description de l'événement" cols="80" rows="8" value="{{ old('description') }}"></textarea>
                     <span class="text-danger">@error('description'){{ $message }} @enderror</span>
                 </div>
                 <div class="form-group">

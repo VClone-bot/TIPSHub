@@ -30,7 +30,7 @@ class EventNotificationMail extends Mailable
      * @return $this
      */
     public function build()
-    {
-        return $this->markdown('emails.EventMail');
+    {      
+        return $this->subject("[TIPS] Nouvel événement annoncé ! ".$this->event->event->name." !")->markdown('emails.EventMail')->with('event', $this->event);
     }
 }

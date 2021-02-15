@@ -7,33 +7,29 @@
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-4 mx-auto w-70" >
-        <div class="container">
-            <div class="row" style="margin-top:45px;">                    
-                <h4>Nos prochaines dates</h4><br>
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col" >                  
+            <h2>Nos prochaines dates</h2><br>
+        </div>
+    </div>
+    <div class="event_listing">
+        @foreach ($events as $e)
+        <hr class="hr-primary" />
+        <div class="row">
+            <div class="col">
+                <img src="{{ $e->visual_url }}" style="height:600px;">
             </div>
-            <div class="event_listing">
-                @foreach ($events as $e)
-                <hr class="hr-primary" />
-                <div class="row">
-                    <div class="col">
-                        <img src="{{ $e->visual_url }}" style="height:600px;">
-                    </div>
-                    <div class="col">
-                        Nom: {{ $e->name }} <br>
-                        Date: {{ $e->date }} {{ $e->heure }} <br>
-                        Lieu: {{ $e->lieu }} <br>
-                        Type: {{ $e->type }} <br>
-                        <a href="{{ $e->facebook_link }}">Lien Facebook</a> <br>
-                        Description: {{ $e->description }} <br>
-                    </div>
-                </div>
-                @endforeach
-            </form>
+            <div class="col-md-6">
+                {{ $e->name }} <br><br>
+                Date: {{ date("d/m/Y", strtotime($e->date)) }} {{ date("H:i", strtotime($e->heure)) }} <br><br>
+                Lieu: {{ $e->lieu }} <br><br>
+                <a href="{{ $e->facebook_link }}">Lien Facebook</a> <br><br>
+                {{ $e->description }}
             </div>
-            </div>
-        </div>  
+        </div>
+        @endforeach
     </div>
 </div>
 @endsection

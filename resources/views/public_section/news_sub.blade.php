@@ -27,7 +27,7 @@
                 @endif
             </div>
                 <div class="form-group"> 
-                    <label for="email">Date</label>
+                    <label for="email">Entrez votre email</label>
                     <input type="email" class="form-control" name="email" placeholder="Entrez votre email pour recevoir nos alertes" value="{{ old('email') }}">
                     <span class="text-danger">@error('email') {{ $message }} @enderror </span>
                 </div>

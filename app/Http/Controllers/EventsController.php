@@ -22,7 +22,7 @@ class EventsController extends Controller
 
     function create(Request $request) {
         $request->validate([
-            'name' => 'required|regex:/^[\s\w-]*$/',
+            'name' => "required|regex:/^['\s\w-]*$/",
             'date' => 'required|date',
             'heure' => 'required',
             'lieu' => 'required',
@@ -40,9 +40,6 @@ class EventsController extends Controller
             $path = public_path().'\visuals';
             $upload = $file->move($path, $filename);
             $base_url = "http://tipshub.fr/visuals/";
-            //$path = Storage::putFileAs(
-                //'visuals', $file, $filename
-            //);
 
             $event = new Event;
             $event->name = $request->name;
@@ -74,13 +71,13 @@ class EventsController extends Controller
 
     function modify(Request $request) {
         $request->validate([
-            'name' => 'required|regex:/^[\w-]*$/',
+            'name' => "required|regex:/^['\s\w-]*$/",
             'date' => 'required|date',
             'heure' => 'required',
             'lieu' => 'required',
             'type' => 'required',
-            'facebook_link' => 'url',
-            'visual' => 'image|mimes:jpeg,png,jpg|max:3192',
+            'facebook_link' => 'required|url',
+            'visual' => 'image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required'
         ]);
         
@@ -174,7 +171,7 @@ class EventsController extends Controller
     }
 
     function member_calendar(Request $request) {
-        $events = Event::where('archived', '=', 0)->orderBy('date')->get();
+        $events = Event::where('archived', '=', 0)->where('published', '=', 1)->orderBy('date')->get();
         return view('member_section.section_vieasso.calendrier', compact('events'));
     }
 
@@ -183,6 +180,8 @@ class EventsController extends Controller
         ->orWhere('type', '=', 'match')
         ->orWhere('type', '=', 'événement extérieur')
         ->orWhere('type', '=', 'tournoi')
+        ->where('archived', '=', 0)
+        ->where('published', '=', 1)
         ->orderBy('date')->get();
         return view('public_section.dates', compact('events'));
     }

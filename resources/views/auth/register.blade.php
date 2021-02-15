@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row" style="margin-top:45px;">
         <div class="col-md-4 col-md-offset-4">
-            <h4>Register</h4>
+            <h4>Créer un compte</h4>
             <br>
             <form action="{{ route('auth.create') }}" method="post">
             @csrf
@@ -26,6 +26,7 @@
                     </div>
                 @endif
             </div>
+                <div class="text-danger">Les comptes sont désactivés à la création, seuls ceux des membres de l'association seront activés par nos administrateurs</div><br>
                 <div class="form-group">
                     <label for="name">Nom</label>
                     <input type="text" class="form-control" name="name" placeholder="Entre votre nom prénom" value="{{ old('name') }}">

@@ -92,6 +92,7 @@ Route::post('/delete_info', [InfosController::class, 'delete'])->middleware('is_
 
 Route::get('/add_cours', [CoursController::class, 'add'])->middleware('is_logged');
 Route::post('/create_cours', [CoursController::class, 'create'])->middleware('is_logged')->name('cours.create');
+Route::post('/delete_cours', [CoursController::class, 'delete'])->middleware('is_logged')->name('cours.delete');
 
 /** ADMIN SECTION ROUTES */
 Route::get('/administration', function () {
